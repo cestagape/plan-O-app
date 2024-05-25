@@ -1,0 +1,25 @@
+{
+  "name": "plan-o-app",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@syncfusion/ej2-vue-kanban": "^25.2.3",
+    "bootstrap": "^5.3.3",
+    "bootstrap-vue-next": "^0.17.2",
+    "vue": "^3.4.21",
+    "vue-drag-n-drop": "^1.3.0",
+    "vue-router": "^4.3.2",
+    "vue-the-mask": "^0.11.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.0.4",
+    "unplugin-vue-components": "^0.26.0",
+    "vite": "^5.2.0"
+  }
+}
