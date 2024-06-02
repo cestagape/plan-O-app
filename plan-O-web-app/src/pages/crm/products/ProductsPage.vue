@@ -1,26 +1,4 @@
 <template>
-  <div
-    class="col-auto col-xxl-10 col-xl-10 col-md-9 col-sm-9 align-items-start mx-0 px-0 mh-100"
-  >
-    <BNavbar
-      toggleable="expand-lg"
-      variant="dark bg-opacity-75"
-      v-b-color-mode="'dark'"
-      class="align-self-start align-items-center shadow-lg"
-    >
-      <BNavbarNav>
-        <BBreadcrumb
-          class="text-decoration-none"
-          :items="breadcrumbStringArray"
-        />
-      </BNavbarNav>
-      <BNavbarNav class="w-50">
-        <BNavForm class="d-flex w-100">
-          <BFormInput id="input-1" class="mx-2" placeholder="Поиск..." />
-          <BButton type="submit" variant="outline-light">Искать</BButton>
-        </BNavForm>
-      </BNavbarNav>
-    </BNavbar>
 
     <BContainer class="py-3 px-3 mx-0" :fluid="true">
       <div class="d-flex mb-4">
@@ -515,7 +493,7 @@
         </BForm>
       </BModal>
     </BContainer>
-  </div>
+
 </template>
 
 <script setup lang="ts">
@@ -690,17 +668,7 @@ function onFiltered(filteredItems: TableItem<Product>[]) {
 </script>
 
 <style>
-@keyframes gradient {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
+
 .Product-table {
   overflow-y: auto;
   overflow-x: hidden;

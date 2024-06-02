@@ -1,15 +1,14 @@
 <template>
-  <BContainer class="py-2 px-2 mx-0" :fluid="true">
+  <BContainer class="py-2 px-2 mx-0" :fluid=true>
     <BButtonGroup class="mb-2">
       <BButton
         :variant="kanbanShow ? 'dark' : 'outline-light'"
-        @click="
-          () => {
+        @click="() => {
             kanbanShow = true;
             tableShow = false;
-          }
-        "
-        >Канбан</BButton
+          }"
+          >
+          Канбан</BButton
       >
       <BButton
         :variant="tableShow ? 'dark' : 'outline-light'"
@@ -258,7 +257,7 @@
         :items="itemsTyped"
         :fields="fieldsTyped"
         :filter="filter"
-        :responsive="False"
+        :responsive="false"
         :filterable="filterOn"
         :multisort="true"
         :stickyHeader="true"
@@ -269,7 +268,6 @@
             size="sm"
             class="me-1 my-1 fw-light"
             variant="light"
-            bg
             @click="info(row.item, row.index)"
           >
             <svg
@@ -285,8 +283,9 @@
               />
               <path
                 d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0"
-              /></svg>
-              Просмотр</BButton
+              />
+            </svg>
+            Просмотр</BButton
           >
           <BButton
             size="sm"
@@ -300,13 +299,17 @@
               height="16"
               fill="currentColor"
               class="bi bi-pencil-fill me-1"
-              viewBox="0 0 16 16">
+              viewBox="0 0 16 16"
+            >
               <path
-                d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.5.5 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11z"/></svg>
-                Изменить</BButton>
+                d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.5.5 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11z"
+              />
+            </svg>
+            Изменить</BButton
+          >
         </template>
       </BTable>
-      
+
       <!-- Info modal -->
       <BModal
         size="lg"
@@ -316,7 +319,8 @@
         :ok-only="true"
         @hide="resetinfoOrder"
       >
-        <BForm v-if="show">
+        <BForm
+        class="overflow-scroll">
           <!-- Название компании -->
           <BFormGroup
             id="info-input-group-1"
@@ -328,7 +332,7 @@
               <BFormInput
                 id="info-input-1"
                 v-model="infoOrder.content.companyName"
-                type="email"
+                type="text"
                 disabled
               />
               <BInputGroupAppend>
@@ -339,17 +343,17 @@
             </BInputGroup>
           </BFormGroup>
 
-          <!-- E-mail -->
+          <!-- createdAt -->
           <BFormGroup
             id="info-input-group-2"
-            label="Email"
+            label="Дата размещения"
             label-for="info-input-2"
             class="my-1"
           >
             <BInputGroup>
               <BFormInput
                 id="info-input-2"
-                v-model="infoOrder.content.email"
+                v-model="infoOrder.content.createdAt"
                 type="text"
                 disabled
               />
@@ -361,34 +365,35 @@
             </BInputGroup>
           </BFormGroup>
 
-          <!-- Тип клиента -->
+          <!-- Товар -->
+        <!-- дописать v-model -->
           <BFormGroup
             id="input-group-3"
-            label="Тип клиента"
+            label="Товары"
             label-for="info-input-3"
             class="my-1"
           >
             <BInputGroup>
               <BFormInput
                 id="info-input-3"
-                v-model="infoOrder.content.customerType"
+                v-model="infoOrder.content.product"
                 type="text"
                 disabled
               />
             </BInputGroup>
           </BFormGroup>
 
-          <!-- Адрес -->
+          <!-- Статус -->
           <BFormGroup
             id="info-input-group-4"
-            label="Адрес"
+            label="Адрес доставки"
             label-for="info-input-4"
             class="my-1"
           >
             <BInputGroup>
               <BFormInput
                 id="info-input-4"
-                v-model="infoOrder.content.adress"
+                v-model="infoOrder.content.status"
                 type="text"
                 disabled
               />
@@ -400,17 +405,17 @@
             </BInputGroup>
           </BFormGroup>
 
-          <!-- Номер телефона -->
+          <!-- Price -->
           <BFormGroup
             id="info-input-group-5"
-            label="Номер телефона"
+            label="Сумма заказа"
             label-for="info-input-5"
             class="my-1"
           >
             <BInputGroup>
               <BFormInput
                 id="info-input-5"
-                v-model="infoOrder.content.phone"
+                v-model="infoOrder.content.price"
                 type="text"
                 disabled
               />
@@ -422,17 +427,17 @@
             </BInputGroup>
           </BFormGroup>
 
-          <!-- Имя менеджера -->
+          <!-- Ответственный сотрудник -->
           <BFormGroup
             id="info-input-group-6"
-            label="Имя менеджера"
+            label="Ответственный сотрудник"
             label-for="info-input-6"
             class="my-1"
           >
             <BInputGroup>
               <BFormInput
                 id="info-input-6"
-                v-model="infoOrder.content.managerName"
+                v-model="infoOrder.content.employee"
                 type="text"
                 disabled
               />
@@ -444,17 +449,105 @@
             </BInputGroup>
           </BFormGroup>
 
-          <!-- Комментарии -->
+          <!-- Дэдлайн -->
           <BFormGroup
             id="info-input-group-7"
-            label="Комментарии"
+            label="Дэдлайн"
             label-for="info-input-7"
             class="my-1"
           >
             <BInputGroup>
               <BFormInput
                 id="info-input-7"
-                v-model="infoOrder.content.comments"
+                v-model="infoOrder.content.deadline"
+                type="text"
+                disabled
+              />
+              <BInputGroupAppend>
+                <BButton @click="copyTextOrder" variant="outline-dark"
+                  >Copy</BButton
+                >
+              </BInputGroupAppend>
+            </BInputGroup>
+          </BFormGroup>
+
+          <!-- Тип оплаты -->
+          <BFormGroup
+            id="info-input-group-8"
+            label="Тип оплаты"
+            label-for="info-input-8"
+            class="my-1"
+          >
+            <BInputGroup>
+              <BFormInput
+                id="info-input-8"
+                v-model="infoOrder.content.paymentType"
+                type="text"
+                disabled
+              />
+              <BInputGroupAppend>
+                <BButton @click="copyTextOrder" variant="outline-dark"
+                  >Copy</BButton
+                >
+              </BInputGroupAppend>
+            </BInputGroup>
+          </BFormGroup>
+
+          <!-- Адрес доставки -->
+          <BFormGroup
+            id="info-input-group-9"
+            label="Адрес доставки"
+            label-for="info-input-9"
+            class="my-1"
+          >
+            <BInputGroup>
+              <BFormInput
+                id="info-input-9"
+                v-model="infoOrder.content.addr"
+                type="text"
+                disabled
+              />
+              <BInputGroupAppend>
+                <BButton @click="copyTextOrder" variant="outline-dark"
+                  >Copy</BButton
+                >
+              </BInputGroupAppend>
+            </BInputGroup>
+          </BFormGroup>
+          
+          <!-- Информация о доставке -->
+          <BFormGroup
+            id="info-input-group-10"
+            label="Информация о доставке"
+            label-for="info-input-10"
+            class="my-1"
+          >
+            <BInputGroup>
+              <BFormInput
+                id="info-input-9"
+                v-model="infoOrder.content.deliveryInfo"
+                type="text"
+                disabled
+              />
+              <BInputGroupAppend>
+                <BButton @click="copyTextOrder" variant="outline-dark"
+                  >Copy</BButton
+                >
+              </BInputGroupAppend>
+            </BInputGroup>
+          </BFormGroup>
+
+          <!-- Дополнительная информация -->
+          <BFormGroup
+            id="info-input-group-11"
+            label="Дополнительная информация"
+            label-for="info-input-11"
+            class="my-1"
+          >
+            <BInputGroup>
+              <BFormInput
+                id="info-input-9"
+                v-model="infoOrder.content.additional"
                 type="text"
                 disabled
               />
@@ -467,25 +560,247 @@
           </BFormGroup>
         </BForm>
       </BModal>
-    </div>
 
+      <!-- Edit modal -->
+      <BModal
+        size="lg"
+        :id="editOrder.id"
+        v-model="editOrder.open"
+        :title="editOrder.title"
+        hideFooter="true"
+        @hide="resetEditClient"
+      >
+        <BForm
+        class="overflow-scroll">
+          <!-- Название компании -->
+          <BFormGroup
+            id="info-input-group-1"
+            label="Название компании"
+            label-for="info-input-1"
+            class="mb-1"
+          >
+            <BInputGroup>
+              <BFormInput
+                id="info-input-1"
+                v-model="infoOrder.content.companyName"
+                type="text"
+                
+              />
+            </BInputGroup>
+          </BFormGroup>
+
+          <!-- createdAt -->
+          <BFormGroup
+            id="info-input-group-2"
+            label="Дата размещения"
+            label-for="info-input-2"
+            class="my-1"
+          >
+            <BInputGroup>
+              <BFormInput
+                id="info-input-2"
+                v-model="infoOrder.content.createdAt"
+                type="text"
+                
+              />
+            </BInputGroup>
+          </BFormGroup>
+
+          <!-- Товар -->
+        <!-- дописать v-model -->
+          <BFormGroup
+            id="input-group-3"
+            label="Товары"
+            label-for="info-input-3"
+            class="my-1"
+          >
+            <BInputGroup>
+              <BFormInput
+                id="info-input-3"
+                v-model="infoOrder.content.product"
+                type="text"
+                
+              />
+            </BInputGroup>
+          </BFormGroup>
+
+          <!-- Статус -->
+          <BFormGroup
+            id="info-input-group-4"
+            label="Адрес доставки"
+            label-for="info-input-4"
+            class="my-1"
+          >
+            <BInputGroup>
+              <BFormInput
+                id="info-input-4"
+                v-model="infoOrder.content.status"
+                type="text"
+                
+              />
+              
+            </BInputGroup>
+          </BFormGroup>
+
+          <!-- Price -->
+          <BFormGroup
+            id="info-input-group-5"
+            label="Сумма заказа"
+            label-for="info-input-5"
+            class="my-1"
+          >
+            <BInputGroup>
+              <BFormInput
+                id="info-input-5"
+                v-model="infoOrder.content.price"
+                type="text"
+                
+              />
+              
+            </BInputGroup>
+          </BFormGroup>
+
+          <!-- Ответственный сотрудник -->
+          <BFormGroup
+            id="info-input-group-6"
+            label="Ответственный сотрудник"
+            label-for="info-input-6"
+            class="my-1"
+          >
+            <BInputGroup>
+              <BFormInput
+                id="info-input-6"
+                v-model="infoOrder.content.employee"
+                type="text"
+                
+              />
+              
+            </BInputGroup>
+          </BFormGroup>
+
+          <!-- Дэдлайн -->
+          <BFormGroup
+            id="info-input-group-7"
+            label="Дэдлайн"
+            label-for="info-input-7"
+            class="my-1"
+          >
+            <BInputGroup>
+              <BFormInput
+                id="info-input-7"
+                v-model="infoOrder.content.deadline"
+                type="text"
+                
+              />
+              
+            </BInputGroup>
+          </BFormGroup>
+
+          <!-- Тип оплаты -->
+          <BFormGroup
+            id="info-input-group-8"
+            label="Тип оплаты"
+            label-for="info-input-8"
+            class="my-1"
+          >
+            <BInputGroup>
+              <BFormInput
+                id="info-input-8"
+                v-model="infoOrder.content.paymentType"
+                type="text"
+                
+              />
+              
+            </BInputGroup>
+          </BFormGroup>
+
+          <!-- Адрес доставки -->
+          <BFormGroup
+            id="info-input-group-9"
+            label="Адрес доставки"
+            label-for="info-input-9"
+            class="my-1"
+          >
+            <BInputGroup>
+              <BFormInput
+                id="info-input-9"
+                v-model="infoOrder.content.addr"
+                type="text"
+                
+              />
+              
+            </BInputGroup>
+          </BFormGroup>
+          
+          <!-- Информация о доставке -->
+          <BFormGroup
+            id="info-input-group-10"
+            label="Информация о доставке"
+            label-for="info-input-10"
+            class="my-1"
+          >
+            <BInputGroup>
+              <BFormInput
+                id="info-input-9"
+                v-model="infoOrder.content.deliveryInfo"
+                type="text"
+                
+              />
+              
+            </BInputGroup>
+          </BFormGroup>
+
+          <!-- Дополнительная информация -->
+          <BFormGroup
+            id="info-input-group-11"
+            label="Дополнительная информация"
+            label-for="info-input-11"
+            class="my-1"
+          >
+            <BInputGroup>
+              <BFormInput
+                id="info-input-9"
+                v-model="infoOrder.content.additional"
+                type="text"
+                
+              />
+              
+            </BInputGroup>
+          </BFormGroup>
+          <BButton type="submit" variant="success" class="mt-3 me-2"
+            >Сохранить</BButton
+          >
+          <BButton
+            type="submit"
+            variant="outline-danger"
+            class="mt-3"
+            @click="
+              () => {
+                editClient.open = 'false';
+              }
+            "
+            >Отмена</BButton
+          >
+        </BForm>
+      </BModal>
+
+      
+
+    </div>
+<!-- 
     <rawDisplayer class="col-2" :value="inProcess" title="List 1" />
     <rawDisplayer class="col-2" :value="paymentPending" title="List 2" />
-    <rawDisplayer class="col-2" :value="paymentPending" title="List 3" />
+    <rawDisplayer class="col-2" :value="paymentPending" title="List 3" /> -->
   </BContainer>
 </template>
 <script setup lang="ts">
 import draggable from "vuedraggable";
 import {
   BButton,
-  BFormSelect,
   BInputGroup,
   BFormGroup,
-  BCol,
   BFormInput,
   BInputGroupAppend,
-  BPagination,
-  BRow,
   BModal,
   BContainer,
   BTable,
@@ -494,16 +809,21 @@ import {
   type TableFieldRaw,
   type TableItem,
 } from "bootstrap-vue-next";
-import { reactive, ref, defineComponent } from "vue";
+import { reactive, ref } from "vue";
 
 const kanbanShow = ref(true);
 const tableShow = ref(false);
 
+interface product {
+  itemName: string;
+  quantity: number;
+}
 interface Order {
   id: number;
+  companyName: string;
   createdAt: string; // ISO 8601 date string for TIMESTAMPTZ
   design: string;
-  quantity: number;
+  product: object;
   status: string;
   price: number;
   addr: string;
@@ -534,14 +854,20 @@ const fieldsTyped: Exclude<TableFieldRaw<Order>, string>[] = [
     sortDirection: "asc",
   },
   {
+    key: "companyName",
+    label: "Клиент",
+    sortable: true,
+    sortDirection: "asc",
+  },
+  {
     key: "createdAt",
     label: "Размещен",
     sortable: true,
     sortDirection: "desc",
   },
   {
-    key: "quantity",
-    label: "Количество",
+    key: "Товары",
+    label: "Товары",
     sortable: true,
     sortDirection: "desc",
   },
@@ -581,6 +907,7 @@ const fieldsTyped: Exclude<TableFieldRaw<Order>, string>[] = [
   },
 ];
 
+// Info
 const infoOrder = reactive({
   open: false,
   id: "info-modal",
@@ -590,28 +917,93 @@ const infoOrder = reactive({
 
 function info(item: TableItem<Order>, index: number) {
   infoOrder.title = `# ${item.id}`;
-  infoOrder.content = item;
   infoOrder.open = true;
+  infoOrder.content = { ...item };
 }
+
 function resetInfoOrder() {
   infoOrder.title = "";
   infoOrder.content = "";
+  infoOrder.open = false;
 }
+
+// Edit
+const editOrder = reactive({
+  open: false,
+  id: "edit-modal",
+  title: "",
+  content: {},
+});
+
+function edit(item: TableItem<Order>, index: number) {
+  editOrder.title = `# ${item.id}`;
+  editOrder.content = { ...item };
+  editOrder.open = true;
+}
+
 function resetEditOrder() {
-  infoOrder.title = "";
-  infoOrder.content = "";
+  editOrder.title = "";
+  editOrder.open = false;
+  editOrder.content = {
+    id:'',
+    companyName: '',
+    createdAt: "",
+    design: "",
+    product: "",
+    status: "",
+    price: "",
+    addr: "",
+    employee: "",
+    deadline: "", 
+    paymentType: "",
+    deliveryInfo: "",
+    additional: ""
+  };
 }
+
+// Add
+const addOrder = reactive({
+  open: false,
+  id: "add-modal",
+  title: "",
+  content: {},
+});
+
+function add(item: TableItem<Order>, index: number) {
+  editOrder.title = `# ${item.id}`;
+  editOrder.open = true;
+  editOrder.content = {
+    id:'',
+    companyName: '',
+    createdAt: "",
+    design: "",
+    product: "",
+    status: "",
+    price: "",
+    addr: "",
+    employee: "",
+    deadline: "", 
+    paymentType: "",
+    deliveryInfo: "",
+    additional: ""
+  }
+
+}
+
 function resetAddOrder() {
-  infoOrder.title = "";
-  infoOrder.content = "";
+  addOrder.title = "";
+  addOrder.content = "";
+  addOrder.open = false;
+
 }
 
 const itemsTyped: TableItem<Order>[] = [
   {
     id: 1,
+    companyName: 'Black Co',
     createdAt: new Date().toISOString(),
     design: "Design A",
-    quantity: 10,
+    product: {itemName: "Наклейка", quantity: 5},
     status: statuses[0], // inProcess
     price: 1000,
     addr: "123 Main St",
@@ -623,9 +1015,10 @@ const itemsTyped: TableItem<Order>[] = [
   },
   {
     id: 2,
+    companyName: 'White Co',
     createdAt: new Date().toISOString(),
     design: "Design B",
-    quantity: 5,
+    product: {itemName: "AWS-пластик", quantity: 10},
     status: statuses[1], // paymentPending
     price: 500,
     addr: "456 Elm St",
@@ -637,9 +1030,10 @@ const itemsTyped: TableItem<Order>[] = [
   },
   {
     id: 3,
+    companyName: 'Green Co',
     createdAt: new Date().toISOString(),
     design: "Design C",
-    quantity: 20,
+    product: {itemName: "AWS-пластик", quantity: 10},
     status: statuses[2], // inProduction
     price: 2000,
     addr: "789 Oak St",
@@ -651,9 +1045,11 @@ const itemsTyped: TableItem<Order>[] = [
   },
   {
     id: 4,
+    companyName: 'Yellow Co',
+
     createdAt: new Date().toISOString(),
     design: "Design D",
-    quantity: 15,
+    product: {itemName: "AWS-пластик", quantity: 10},
     status: statuses[3], // qualityControl
     price: 1500,
     addr: "101 Maple St",
@@ -665,9 +1061,10 @@ const itemsTyped: TableItem<Order>[] = [
   },
   {
     id: 5,
+    companyName: 'Brown Co',
     createdAt: new Date().toISOString(),
     design: "Design E",
-    quantity: 25,
+    product: {itemName: "AWS-пластик", quantity: 10},
     status: statuses[4], // packaging
     price: 2500,
     addr: "202 Birch St",

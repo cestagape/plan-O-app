@@ -1,11 +1,11 @@
 <template>
   <div class="bg-dark px-0 dark bg-opacity-75">
     <div
-      class="d-flex flex-column align-items-center align-items-sm-start ps-3 py-2 min-vh-100 max-vh-100"
-      style="max-height: 100vh; min-height: 100vh"
+      class="d-flex flex-column align-items-center align-items-sm-start ps-3 py-2"
+      style="min-height: 100vh"
     >
       <a
-        href="/"
+        href="#/dashboard"
         class="d-flex align-items-center p-0 m-0 me-md-auto text-white text-decoration-none"
 
       >
@@ -24,7 +24,7 @@
           id="menu"
         >
           <li>
-            <a href="#" class="nav-link px-0 align-middle text-reset d-flex">
+            <a href="#/dashboard" class="nav-link px-0 align-middle text-reset d-flex">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -243,7 +243,7 @@
               text=""
               toggle-class="text-decoration-none"
               class="ms-0"
-              v-bind:no-caret="window.width >= 576 ? False : ''"
+              v-bind:no-caret="window.width >= 576 ? false : ''"
             >
               <template #button-content>
                 <img
@@ -261,7 +261,7 @@
                   >{{ profile.name }} {{ profile.surname }}</span
                 >
               </template>
-              <BDropdownItem href="#" class="text-reset fw-bolder" variant="dark">
+              <BDropdownItem href="#/login" class="text-reset fw-bolder" variant="dark">
                 Выход
               </BDropdownItem>
             </BDropdown>

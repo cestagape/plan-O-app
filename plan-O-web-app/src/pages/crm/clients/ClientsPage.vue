@@ -47,7 +47,6 @@
             size="sm"
             class="me-1 my-1 fw-light"
             variant="light"
-            bg
             @click="info(row.item, row.index)"
           >
             <svg
@@ -125,8 +124,9 @@
         :title="infoClient.title"
         :ok-only="true"
         @hide="resetInfoClient"
+        class="overflow-x-auto"
       >
-        <BForm v-if="show">
+        <BForm>
           <!-- Название компании -->
           <BFormGroup
             id="info-input-group-1"
@@ -879,40 +879,9 @@ function onFiltered(filteredItems: TableItem<Client>[]) {
 </script>
 
 <style>
-body {
-  height: 100%;
-  background: radial-gradient(
-    circle,
-    #ec8f5e,
-    #f3b664,
-    #f1eb8b,
-    #cee6a9,
-    #a0bd73,
-    #83b58b,
-    #8cc0bc,
-    #8cc0de,
-    #2c4d94,
-    #1c315e
-  );
-  background-size: 400% 400%;
-  animation: gradient 40s ease infinite;
-}
-
-@keyframes gradient {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
 .client-table {
   overflow-y: auto;
   overflow-x: hidden;
-
   scrollbar-width: thin;
   scrollbar-color: rgba(107, 113, 118, 1) rgba(255, 255, 255, 0);
 }
