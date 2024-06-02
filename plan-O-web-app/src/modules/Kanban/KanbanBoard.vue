@@ -1,27 +1,81 @@
 <template>
-    <div class="flex p-5 bg-dark">
-      <KanbanColumn
-        v-for="status in columnStatuses"
-        :key="status"
-        :status="status"
-        :cards="cards.filter(card => card.status === status)"
-        @moveCard="moveCard"
-      ></KanbanColumn>
+  <div class="row">
+    <div class="col-3">
+      <h3>Draggable 1</h3>
+      <draggable
+        class="list-group"
+        :list="list1"
+        group="people"
+        @change="log"
+        itemKey="name"
+      >
+        <template #item="{ element, index }">
+          <div class="list-group-item">{{ element.name }} {{ index }}</div>
+        </template>
+      </draggable>
     </div>
-  </template>
-  
-  <script setup>
-  import { ref } from 'vue';
-  import KanbanColumn from './KanbanColumn.vue';
-  const cards = ref([
-    { id: 1, title: 'Task 1', status: 'New' },
-    // Add more cards with various statuses
-  ]);
-  const columnStatuses = ['New', 'To Do', 'In Progress', 'Done'];
-  const moveCard = (cardId, newStatus) => {
-    const card = cards.value.find(card => card.id === cardId);
-    if (card) {
-      card.status = newStatus;
+
+    <div class="col-3">
+      <h3>Draggable 2</h3>
+      <draggable
+        class="list-group"
+        :list="list2"
+        group="people"
+        @change="log"
+        itemKey="name"
+      >
+        <template #item="{ element, index }">
+          <div class="list-group-item">{{ element.name }} {{ index }}</div>
+          
+        </template>
+      </draggable>
+    </div>
+
+    <rawDisplayer class="col-3" :value="list1" title="List 1" />
+
+    <rawDisplayer class="col-3" :value="list2" title="List 2" />
+  </div>
+</template>
+<script>
+import draggable from "vuedraggable";
+
+export default {
+  name: "KanbanBoard",
+  display: "KanbanBoard",
+  order: 1,
+  components: {
+    draggable
+  },
+  data() {
+    return {
+      list1: [
+        { name: "John", id: 1, assignee: "John", },
+        { name: "Joao", id: 2 },
+        { name: "Jean", id: 3 },
+        { name: "Gerard", id: 4 }
+      ],
+      list2: [
+        { name: "Juan", id: 5 },
+        { name: "Edgard", id: 6 },
+        { name: "Johnson", id: 7 }
+      ]
+    };
+  },
+  methods: {
+    add: function() {
+      this.list.push({ name: "Juan" });
+    },
+    replace: function() {
+      this.list = [{ name: "Edgard" }];
+    },
+    clone: function(el) {
+      return {
+        name: el.name + " cloned"
+      };
+    },
+    log: function(evt) {
+      window.console.log(evt);
     }
-  };
-  </script>
+  }
+};
+</script>

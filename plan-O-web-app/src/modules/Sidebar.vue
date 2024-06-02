@@ -6,7 +6,8 @@
     >
       <a
         href="/"
-        class="d-flex align-items-center pb-0 mb-md-0 me-md-auto text-white text-decoration-none"
+        class="d-flex align-items-center p-0 m-0 me-md-auto text-white text-decoration-none"
+
       >
         <span class="fs-5 d-none d-sm-inline">Plan-Ó</span>
       </a>
@@ -234,7 +235,8 @@
         id="menu"
       >
         <li>
-          <a href="#" class="nav-link px-0 text-reset d-flex ms-0">
+          <a
+          class="nav-link px-0 text-reset d-flex ms-0">
             <BDropdown
               dropend
               variant="link text-reset"

@@ -4,29 +4,41 @@
       <Sidebar
         class="col-auto col-xxl-2 col-xl-2 col-md-3 col-sm-3 shadow-lg"
       />
-      <!-- <router-view></router-view> -->
-      <KanbanBoard> 
-      </KanbanBoard>
+      <div
+        class="content col-auto col-xxl-10 col-xl-10 col-md-9 col-sm-9 align-items-start mx-0 px-0 mh-100"
+      >
+        <BNavbar
+          toggleable="expand-lg"
+          variant="dark bg-opacity-75"
+          v-b-color-mode="'dark'"
+          class="align-self-start align-items-center shadow-lg"
+        >
+          <BNavbarNav>
+            <BBreadcrumb
+              class="text-decoration-none"
+              :items="breadcrumbStringArray"
+            />
+          </BNavbarNav>
+          <BNavbarNav class="w-50">
+            <BNavForm class="d-flex w-100">
+              <BFormInput id="input-1" class="mx-2" placeholder="Поиск..." />
+              <BButton type="submit" variant="outline-light">Искать</BButton>
+            </BNavForm>
+          </BNavbarNav>
+        </BNavbar>
+        <router-view></router-view>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import Sidebar from "./modules/Sidebar.vue";
-import ClientsPage from "./pages/clients/ClientsPage.vue";
-import ProductsPage from "./pages/products/ProductsPage.vue";
-import OrdersPage from "./pages/orders/OrdersPage.vue";
-import KanbanBoard from './modules/Kanban/KanbanBoard.vue'
-import KanbanColumn from './modules/Kanban/KanbanColumn.vue'
-
 
 
 export default {
   components: {
-    ClientsPage,
-    ProductsPage,
     Sidebar,
-    OrdersPage
   },
   data() {
     return {};
@@ -35,7 +47,6 @@ export default {
 </script>
 <style>
 body {
-  height: 100%;
   background: radial-gradient(
     circle,
     #ec8f5e,
@@ -51,5 +62,9 @@ body {
   );
   background-size: 400% 400%;
   animation: gradient 40s ease infinite;
+}
+.content {
+  max-height: 100vh;
+  min-height: 100vh;
 }
 </style>

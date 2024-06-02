@@ -8,7 +8,8 @@ export default createRouter ({
     routes: [
         { path:'/crm/clients', component: ClientsPage},
         { path:'/crm/products', component: ProductsPage},
-        { path:'/crm/orders', component: OrdersPage}
+        { path:'/crm/orders', component: OrdersPage},
+        { path:'/', redirect: '/crm/clients'},
 
     ]
 })
