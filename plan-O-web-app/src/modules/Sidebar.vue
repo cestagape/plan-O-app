@@ -105,7 +105,7 @@
                   </li>
                   <li style="margin-left: 23px">
                     <a
-                      href="#"
+                      href="#/crm/suppliers"
                       class="nav-link px-0 align-middle text-reset d-flex"
                       ><span class="d-none d-sm-inline">Поставщики</span></a
                     >
@@ -156,7 +156,7 @@
                 <div class="ms-3">
                   <li style="margin-left: 23px">
                     <a
-                      href="#"
+                      href="#/workflow/tasks"
                       class="nav-link px-0 align-middle text-reset d-flex"
                     >
                       <span class="d-none d-sm-inline">Задачи</span>
@@ -164,14 +164,14 @@
                   </li>
                   <li style="margin-left: 23px">
                     <a
-                      href="#"
+                      href="#/workflow/leeds"
                       class="nav-link px-0 align-middle text-reset d-flex"
                       ><span class="d-none d-sm-inline">Лиды</span></a
                     >
                   </li>
                   <li style="margin-left: 23px">
                     <a
-                      href="#"
+                      href="#/workflow/calendar"
                       class="nav-link px-0 align-middle text-reset d-flex"
                       ><span class="d-none d-sm-inline">Календарь</span></a
                     >

@@ -287,7 +287,7 @@
         hideFooter="true"
         @hide="resetEditClient"
       >
-        <BForm @submit="onSubmitEdit()" v-if="show">
+        <BForm @submit="onSubmitEdit()">
           <BFormGroup
             id="edit-input-group-1"
             label="Название компании"
@@ -383,11 +383,7 @@
             type="submit"
             variant="outline-danger"
             class="mt-3"
-            @click="
-              () => {
-                editClient.open = 'false';
-              }
-            "
+            @click="resetEditClient"
             >Отмена</BButton
           >
         </BForm>
@@ -403,7 +399,6 @@
         @hide="resetAddClient"
       >
         <BForm  
-        v-if="show"
         @submit="onSubmitAdd(addClient.content)">
           <BFormGroup
             id="add-input-group-1"
@@ -707,7 +702,6 @@ const itemsTyped = reactive([
     "comments": "Looking for event catering options"
   },
 ])
-const show = ref(true);
 
 const breadcrumbStringArray = ["CRM", "Клиенты"];
 
