@@ -24,6 +24,7 @@
       >
     </BButtonGroup>
 
+    <!-- канбан -->
     <BCardGroup deck v-if="kanbanShow">
       <BCard
         header="В обработке"
@@ -45,11 +46,13 @@
         <draggable
           class="list-group"
           :list="inProcess"
+          @start="drag=true" 
+          @end="drag=false"
           group="people"
           @change="log"
           itemKey="name"
         >
-          <template #order="{ element, index }">
+          <template #item="{ element, index }">
             <div class="list-group-item">{{ element.name }} {{ index }}</div>
           </template>
         </draggable>
@@ -78,7 +81,7 @@
           @change="log"
           itemKey="name"
         >
-          <template #order="{ element, index }">
+          <template #item="{ element, index }">
             <div class="list-group-item">{{ element.name }} {{ index }}</div>
           </template>
         </draggable>
@@ -107,7 +110,7 @@
           @change="log"
           itemKey="name"
         >
-          <template #order="{ element, index }">
+          <template #item="{ element, index }">
             <div class="list-group-item">{{ element.name }} {{ index }}</div>
           </template>
         </draggable>
@@ -136,7 +139,7 @@
           @change="log"
           itemKey="name"
         >
-          <template #order="{ element, index }">
+          <template #item="{ element, index }">
             <div class="list-group-item">{{ element.name }} {{ index }}</div>
           </template>
         </draggable>
@@ -165,7 +168,7 @@
           @change="log"
           itemKey="name"
         >
-          <template #order="{ element, index }">
+          <template #item="{ element, index }">
             <div class="list-group-item">{{ element.name }} {{ index }}</div>
           </template>
         </draggable>
@@ -194,7 +197,7 @@
           @change="log"
           itemKey="name"
         >
-          <template #order="{ element, index }">
+          <template #item="{ element, index }">
             <div class="list-group-item">{{ element.name }} {{ index }}</div>
           </template>
         </draggable>
@@ -223,11 +226,12 @@
           @change="log"
           itemKey="name"
         >
-          <template #order="{ element, index }">
+          <template #item="{ element, index }">
             <div class="list-group-item">{{ element.name }} {{ index }}</div>
           </template>
         </draggable>
       </BCard>
+      
     </BCardGroup>
     <div v-if="tableShow">
       <div class="d-flex mb-2" v-if="tableShow">
@@ -619,10 +623,11 @@
               </div>
             </template>
             <template #cell(actions)="row">
-              <BButton 
-              variant="outline-dark text-danger"
-              class="m-1 ms-0" 
-              @click="removeOrderItem(editOrder.content.items, row.index)">
+              <BButton
+                variant="outline-dark text-danger"
+                class="m-1 ms-0"
+                @click="removeOrderItem(editOrder.content.items, row.index)"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="1.5em"
@@ -872,10 +877,11 @@
               </div>
             </template>
             <template #cell(actions)="row">
-              <BButton 
-              variant="outline-dark text-danger"
-              class="m-1 ms-0" 
-              @click="removeOrderItem(addOrder.content.items, row.index)">
+              <BButton
+                variant="outline-dark text-danger"
+                class="m-1 ms-0"
+                @click="removeOrderItem(addOrder.content.items, row.index)"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="1.5em"
@@ -1052,10 +1058,6 @@
         </BForm>
       </BModal>
     </div>
-    
-    <rawDisplayer class="col-2" :value="inProcess" title="List 1" />
-    <rawDisplayer class="col-2" :value="paymentPending" title="List 2" />
-    <rawDisplayer class="col-2" :value="paymentPending" title="List 3" />
   </BContainer>
 </template>
 <script setup lang="ts">
@@ -1114,6 +1116,22 @@ const statuses = [
   "sentForDelivery",
 ];
 
+var inProcess = [];
+var paymentPending = [
+  {
+    name: "nigga",
+    id: 1,
+  },
+];
+var inProduction =  [];
+  var  qualityControl= [];
+  var  packaging = []
+  var  docsCreation = []
+  var  sentForDelivery =  [];
+
+  const log = (evt) => {
+      window.console.log(evt);
+  }
 const products = ["AWS-пластик", "Наклейка", "Шильд", "Шелкография"];
 
 const paymentTypes = ["Рассчетный счет компании", "Наличные", "СБП"];
@@ -1229,7 +1247,7 @@ function resetInfoOrder() {
 }
 
 // Edit
-let editOrder = reactive({
+const editOrder = reactive({
   open: false,
   id: "edit-modal",
   title: "",

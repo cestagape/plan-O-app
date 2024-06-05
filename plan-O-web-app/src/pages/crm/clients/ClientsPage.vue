@@ -818,7 +818,7 @@ function add() {
 
 const onSubmitAdd = (obj) => {
   itemsTyped.push(obj);
-  addClient.open = false;
+  resetAddClient();
   // TODO:
   //  Добавить метод по отправке даннных на сервер в 
 
