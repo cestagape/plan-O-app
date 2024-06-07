@@ -1,5 +1,5 @@
 <template>
-  <BContainer class="py-3 px-3 mx-0" :fluid="true">
+  <BContainer class="p-2 mx-0" :fluid="true">
     <div class="d-flex mb-4">
       <BButton type="submit" class="text-info" variant="dark me-2" @click="add">
         Добавить</BButton
@@ -20,7 +20,7 @@
     <!-- Product TABLE-->
     <BTable
       class="Product-table mt-1 rounded-3"
-      style="max-height: 75vh; max-width: 100%"
+      style="max-height: calc(100vh - 13em); max-width: 100%"
       model="sortBy"
       :sort-internal="true"
       :items="itemsTyped"
@@ -78,37 +78,7 @@
         </BButton>
       </template>
     </BTable>
-    <BRow class="my-2 align-self-bottom">
-      <!-- PAGINATION -->
-      <BCol sm="6">
-        <BPagination
-          v-model="currentPage"
-          :total-rows="totalRows"
-          :per-page="perPage"
-          :align="'end'"
-          size="sm"
-          class="my-0"
-        />
-      </BCol>
-      <BCol sm="6">
-        <BFormGroup
-          label="Per page"
-          label-for="per-page-select"
-          label-cols-sm="10"
-          label-align-sm="end"
-          label-size="sm"
-          class="mb-0 d-flex justify-content-end"
-        >
-          <BFormSelect
-            id="per-page-select"
-            v-model="perPage"
-            :options="pageOptions"
-            size="sm"
-          />
-        </BFormGroup>
-      </BCol>
-    </BRow>
-
+    
     <!-- Info modal -->
     <BModal
       class="info"

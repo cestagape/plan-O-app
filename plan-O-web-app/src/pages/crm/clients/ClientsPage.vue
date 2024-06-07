@@ -26,12 +26,11 @@
       <!-- CLIENT TABLE-->
       <BTable
         class="client-table mt-1 rounded-3"
-        style="max-height: 75vh; max-width: 100%"
+        style="max-height: calc(100vh - 11em); max-width: 100%"
         model="sortBy"
         :sort-internal="true"
         :items="itemsTyped"
         :fields="fieldsTyped"
-        :current-page="currentPage"
         :per-page="perPage"
         :filter="filter"
         :responsive="False"
@@ -85,36 +84,7 @@
         </template>
       </BTable>
       
-      <BRow class="my-2 align-self-bottom">
-        <!-- PAGINATION -->
-        <BCol sm="6">
-          <BPagination
-            v-model="currentPage"
-            :total-rows="totalRows"
-            :per-page="perPage"
-            :align="'end'"
-            size="sm"
-            class="my-0"
-          />
-        </BCol>
-        <BCol sm="6">
-          <BFormGroup
-            label="Per page"
-            label-for="per-page-select"
-            label-cols-sm="10"
-            label-align-sm="end"
-            label-size="sm"
-            class="mb-0 d-flex justify-content-end"
-          >
-            <BFormSelect
-              id="per-page-select"
-              v-model="perPage"
-              :options="pageOptions"
-              size="sm"
-            />
-          </BFormGroup>
-        </BCol>
-      </BRow>
+
 
       <!-- Info modal -->
       <BModal
@@ -744,17 +714,9 @@ const fieldsTyped: Exclude<TableFieldRaw<Client>, string>[] = [
   { key: "actions", label: "Действия" },
 ];
 
-const pageOptions = [
-  { value: 5, text: "5" },
-  { value: 10, text: "10" },
-  { value: 15, text: "15" },
-  { value: 30, text: "30" },
-  { value: 100, text: "100" },
-];
 
 const totalRows = ref(itemsTyped.length);
-const currentPage = ref(1);
-const perPage = ref(30);
+const perPage = ref(totalRows);
 const filter = ref(null);
 const filterOn = ref([]);
 
@@ -868,7 +830,6 @@ function copyTextClient() {}
 function onFiltered(filteredItems: TableItem<Client>[]) {
   // Trigger pagination to update the number of buttons/pages due to filtering
   totalRows.value = filteredItems.length;
-  currentPage.value = 1;
 }
 </script>
 

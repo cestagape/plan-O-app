@@ -6,7 +6,7 @@
 export default {
 
 }
-</script>
+z/script>
 
 <style>
 
