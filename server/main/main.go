@@ -20,7 +20,7 @@ func main() {
 	}
 	s := server.New(repo)
 	go func() {
-		err := s.Run("http://91.142.72.135:80")
+		err := s.Run(":80")
 		log.Println("server is running")
 		if err != nil {
 			panic(err)
