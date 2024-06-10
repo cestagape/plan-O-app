@@ -55,7 +55,7 @@ CREATE TABLE orders (
     status_id INTEGER NOT NULL REFERENCES order_statuses(id),
     price INTEGER NOT NULL DEFAULT 0,
     addr TEXT NOT NULL DEFAULT '',
-    employee_id INTEGER NOT NULL REFERENCES users(id),
+    employee_id INTEGER NOT NULL REFERENCES useitems’rs(id),
     deadline TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     payment_type_id INTEGER NOT NULL REFERENCES payment_types(id),
     delivery_info JSONB NOT NULL DEFAULT '{}'::JSONB,
@@ -72,7 +72,7 @@ CREATE TABLE order_transitions (
 
 -- Заказы-товары.
 CREATE TABLE orders_items (
-    order_id INTEGER NOT NULL REFERENCES orders(id),
+    order_id INTEGER NOT NULL REFERENCES orders(id), 
     item_id INTEGER NOT NULL REFERENCES items(id)
 );
 
