@@ -365,6 +365,20 @@ const statusList = ["На очереди", "В работе", "Завершен"
 
 const employeeList = ["Елена Древинг", "Алексей Иванов"];
 
+const convertToIsoWithoutTimezone = (timestamp: number): string => {
+    const date = new Date(timestamp);
+
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+
+    const formattedDateTime = `${year}-${month}-${day}T${hours}:${minutes}`;
+
+    return formattedDateTime;
+}
+
 const itemsTyped = [
   {
     id: 1,
@@ -387,11 +401,7 @@ const itemsTyped = [
     status: "В работе",
   },
 ];
-const convertToIsoWithoutTimezone = (timestamp: number): string => {
-  const date = new Date(timestamp * 1000); // Convert Unix timestamp to milliseconds
-  date.setHours(date.getHours() + 3); // Add 3 hours to the date
-  return date.toISOString().split(".")[0]; // Remove the milliseconds and timezone
-};
+
 // Info
 const infoLead = reactive({
   open: false,
@@ -421,7 +431,7 @@ const addLead = reactive({
 });
 
 function add() {
-  addLead.title = "Новый заказ";
+  addLead.title = "Новый лид";
   addLead.open = true;
   addLead.content = {
     id: "",

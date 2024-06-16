@@ -3,7 +3,7 @@
     class="container d-flex align-items-center justify-content-center vh-100"
   >
     <div
-      class="col-4 bg-transparent bg-opacity-25 px-5 py-5 rounded-4 border border-dark shadow-lg"
+      class="col-4 bg-transparent bg-opacity-25 py-5 rounded-4 border border-dark shadow-lg"
     >
       <div class="text-center mb-5">
         <svg
@@ -21,22 +21,12 @@
           />
         </svg>
       </div>
-      <BForm @submit="onSubmit">
+      <BForm @submit="onSubmit"
+      class="px-5 ">
         <div class="mb-5">
           <BFormGroup id="login-group-1">
 
-              <!-- <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                fill="currentColor"
-                class="bi bi-envelope-fill"
-                viewBox="0 0 16 16"
-              >
-                <path
-                  d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414zM0 4.697v7.104l5.803-3.558zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586zm3.436-.586L16 11.801V4.697z"
-                />
-              </svg> -->
+
               <BFormInput
                 id="input-1"
                 class="w-100 border-0 border-bottom border-black rounded-0 bg-transparent"
@@ -51,18 +41,6 @@
 
         <div class="mb-5">
           <BFormGroup id="input-group-2">
-            <!-- <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="currentColor"
-              class="bi bi-lock-fill"
-              viewBox="0 0 16 16"
-            >
-              <path
-                d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2m3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2"
-              />
-            </svg> -->
             <BFormInput
               id="input-2"
               class="w-100 border-0 border-bottom border-black rounded-0 bg-transparent"

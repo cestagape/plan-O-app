@@ -340,12 +340,25 @@ const employeeList = [
   'Алексей Иванов'
 ]
 
+const convertToIsoWithoutTimezone = (timestamp: number): string => {
+    const date = new Date(timestamp);
+
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+
+    const formattedDateTime = `${year}-${month}-${day}T${hours}:${minutes}`;
+
+    return formattedDateTime;
+}
 
 const itemsTyped = [
   {
     id: 1,
     name: "Task 1",
-    deadline: "2024-06-07T12:00:00Z",
+    deadline: convertToIsoWithoutTimezone(Date.now()),
     description: "Description for Task 1",
     employee: 'Елена Древинг',
     createdAt: "2024-06-01T08:00:00Z",
@@ -354,18 +367,16 @@ const itemsTyped = [
   {
     id: 2,
     name: "Task 2",
-    deadline: "2024-06-08T12:00:00Z",
+    deadline: convertToIsoWithoutTimezone(Date.now()),
     description: "Description for Task 2",
     employee: 'Алексей Иванов',
     createdAt: "2024-06-02T08:00:00Z",
     status: "В работе",
   },
 ];
-const convertToIsoWithoutTimezone = (timestamp: number): string => {
-  const date = new Date(timestamp * 1000); // Convert Unix timestamp to milliseconds
-  date.setHours(date.getHours() + 3); // Add 3 hours to the date
-  return date.toISOString().split(".")[0]; // Remove the milliseconds and timezone
-};
+
+
+
 // Info
 const infoTask = reactive({
   open: false,
@@ -403,7 +414,7 @@ const addTask = reactive({
 });
 
 function add() {
-  addTask.title = "Новый заказ";
+  addTask.title = "Новая задача";
   addTask.open = true;
   addTask.content = {
     id: "",

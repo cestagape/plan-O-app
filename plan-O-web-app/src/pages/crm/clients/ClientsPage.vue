@@ -31,15 +31,12 @@
         :sort-internal="true"
         :items="itemsTyped"
         :fields="fieldsTyped"
-        :per-page="perPage"
         :filter="filter"
-        :responsive="False"
+        :responsive="false"
         :filterable="filterOn"
         :multisort="true"
         :stickyHeader="true"
         @filtered="onFiltered"
-        ref="table"
-        id="my-table"
       >
         <template #cell(actions)="row">
           <BButton
@@ -112,7 +109,7 @@
                 disabled
               />
               <BInputGroupAppend>
-                <BButton @click="copyTextClient" variant="outline-dark"
+                <BButton @click="copyText(infoClient.content.companyName)" variant="outline-dark"
                   >Copy</BButton
                 >
               </BInputGroupAppend>
@@ -134,7 +131,7 @@
                 disabled
               />
               <BInputGroupAppend>
-                <BButton @click="copyTextClient(info)" variant="outline-dark"
+                <BButton @click="copyText(infoClient.content.email)" variant="outline-dark"
                   >Copy</BButton
                 >
               </BInputGroupAppend>
@@ -173,7 +170,7 @@
                 disabled
               />
               <BInputGroupAppend>
-                <BButton @click="copyTextClient" variant="outline-dark"
+                <BButton @click="copyText(infoClient.content.adress)" variant="outline-dark"
                   >Copy</BButton
                 >
               </BInputGroupAppend>
@@ -195,7 +192,7 @@
                 disabled
               />
               <BInputGroupAppend>
-                <BButton @click="copyTextClient" variant="outline-dark"
+                <BButton @click="copyText(infoClient.content.phone)" variant="outline-dark"
                   >Copy</BButton
                 >
               </BInputGroupAppend>
@@ -217,7 +214,7 @@
                 disabled
               />
               <BInputGroupAppend>
-                <BButton @click="copyTextClient" variant="outline-dark"
+                <BButton @click="copyText(infoClient.content.managerName)" variant="outline-dark"
                   >Copy</BButton
                 >
               </BInputGroupAppend>
@@ -239,7 +236,7 @@
                 disabled
               />
               <BInputGroupAppend>
-                <BButton @click="copyTextClient" variant="outline-dark"
+                <BButton @click="copyText(infoClient.content.comments)" variant="outline-dark"
                   >Copy</BButton
                 >
               </BInputGroupAppend>
@@ -508,7 +505,7 @@ interface Client {
   comments: string;
 };
 
-const itemsTyped = reactive([
+const itemsTyped: Client[] = reactive([
   {
     "companyName": "BlueSky Solutions",
     "customerType": "Corporate",
@@ -673,7 +670,6 @@ const itemsTyped = reactive([
   },
 ])
 
-const breadcrumbStringArray = ["CRM", "Клиенты"];
 
 
 
@@ -718,7 +714,7 @@ const fieldsTyped: Exclude<TableFieldRaw<Client>, string>[] = [
 const totalRows = ref(itemsTyped.length);
 const perPage = ref(totalRows);
 const filter = ref(null);
-const filterOn = ref([]);
+const breadcrumbStringArray = ["CRM", "Клиенты"];
 
 const clientTypes = [
   { text: "Выберите..", value: null },
@@ -734,6 +730,51 @@ const infoClient = reactive({
   content: {},
 });
 
+function info(item: TableItem<Client>, index: number) {
+  infoClient.title = `${item.companyName}`;
+  infoClient.content = { ...item }
+  infoClient.open = true;
+}
+
+
+function resetInfoClient() {
+  infoClient.title = "";
+  infoClient.content = "";
+  infoClient.open = false;
+}
+
+const editClient = reactive({
+  open: false,
+  id: "edit-modal",
+  title: "",
+  content: {},
+});
+
+function edit(item: TableItem<Client>, index: number) {
+  editClient.title = `${item.companyName}`;
+  editClient.open = true;
+  editClient.content = item
+}
+
+function resetEditClient() {
+  editClient.title = "";
+  editClient.content = {
+    companyName: "",
+    customerType: "",
+    adress: "",
+    email: "",
+    phone: "",
+    managerName: "",
+    comments: "",
+  };
+  editClient.open = false;
+}
+
+const onSubmitEdit = () => {
+  editClient.open = false;
+  //  http post-запрос
+};
+
 const addClient = reactive({
   open: false,
   id: "add-modal",
@@ -741,28 +782,6 @@ const addClient = reactive({
   content: {},
 });
 
-const editClient = reactive({
-  open: false,
-  id: "edit-modal",
-  title: "",
-  content: {},
-  item: {},
-});
-
-// Create an options list from our fields
-function info(item: TableItem<Client>, index: number) {
-  infoClient.title = `${item.companyName}`;
-  infoClient.content = { ...item }
-  infoClient.open = true;
-}
-
-function edit(item: TableItem<Client>, index: number) {
-  editClient.title = `${item.companyName}`;
-  editClient.open = true;
-  editClient.content = item
-  editClient.item = item
-
-}
 function add() {
   addClient.title = `Новый клиент`;
   addClient.open = true;
@@ -777,7 +796,6 @@ function add() {
   }
 }
 
-
 const onSubmitAdd = (obj) => {
   itemsTyped.push(obj);
   resetAddClient();
@@ -785,32 +803,7 @@ const onSubmitAdd = (obj) => {
   //  Добавить метод по отправке даннных на сервер в 
 
 };
-const onSubmitEdit = () => {
-  // alert(JSON.stringify(item))
-  editClient.item = { ...editClient.content }
-  editClient.open = false;
-  // TODO:
-  //  Добавить метод по отправке даннных на сервер в 
-};
 
-function resetInfoClient() {
-  infoClient.title = "";
-  infoClient.content = "";
-  infoClient.open = false;
-}
-function resetEditClient() {
-  editClient.title = "";
-  editClient.content = {
-    companyName: "",
-    customerType: "",
-    adress: "",
-    email: "",
-    phone: "",
-    managerName: "",
-    comments: "",
-  };
-  editClient.open = false;
-}
 function resetAddClient() {
   addClient.title = "";
   addClient.content = {
@@ -825,7 +818,9 @@ function resetAddClient() {
   addClient.open = false;
 }
 
-function copyTextClient() {}
+function copyText(input) {
+  navigator.clipboard.writeText(input)
+}
 
 function onFiltered(filteredItems: TableItem<Client>[]) {
   // Trigger pagination to update the number of buttons/pages due to filtering

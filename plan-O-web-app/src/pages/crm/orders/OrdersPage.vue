@@ -143,7 +143,7 @@
               disabled
             />
             <BInputGroupAppend>
-              <BButton @click="copyTextOrder" variant="outline-dark"
+              <BButton @click="copyText(infoOrder.content.companyName)" variant="outline-dark"
                 >Copy</BButton
               >
             </BInputGroupAppend>
@@ -165,7 +165,7 @@
               disabled
             />
             <BInputGroupAppend>
-              <BButton @click="copyTextOrder(info)" variant="outline-dark"
+              <BButton @click="copyText(infoOrder.content.createdAt)" variant="outline-dark"
                 >Copy</BButton
               >
             </BInputGroupAppend>
@@ -196,7 +196,7 @@
               disabled
             />
             <BInputGroupAppend>
-              <BButton @click="copyTextOrder" variant="outline-dark"
+              <BButton @click="copyText(infoOrder.content.status)" variant="outline-dark"
                 >Copy</BButton
               >
             </BInputGroupAppend>
@@ -218,7 +218,7 @@
               disabled
             />
             <BInputGroupAppend>
-              <BButton @click="copyTextOrder" variant="outline-dark"
+              <BButton @click="copyText(infoOrder.content.price)" variant="outline-dark"
                 >Copy</BButton
               >
             </BInputGroupAppend>
@@ -233,14 +233,14 @@
           class="my-1"
         >
           <BInputGroup>
-            <BFormInput
-              id="info-input-6"
+            <BFormSelect
+              id="edit-input-5"
               v-model="infoOrder.content.employee"
-              type="text"
+              :options="employees"
               disabled
             />
             <BInputGroupAppend>
-              <BButton @click="copyTextOrder" variant="outline-dark"
+              <BButton @click="copyText(infoOrder.content.employee)" variant="outline-dark"
                 >Copy</BButton
               >
             </BInputGroupAppend>
@@ -262,7 +262,7 @@
               disabled
             />
             <BInputGroupAppend>
-              <BButton @click="copyTextOrder" variant="outline-dark"
+              <BButton @click="copyText(infoOrder.content.deadline)" variant="outline-dark"
                 >Copy</BButton
               >
             </BInputGroupAppend>
@@ -284,7 +284,7 @@
               disabled
             />
             <BInputGroupAppend>
-              <BButton @click="copyTextOrder" variant="outline-dark"
+              <BButton @click="copyText(infoOrder.content.paymentType)" variant="outline-dark"
                 >Copy</BButton
               >
             </BInputGroupAppend>
@@ -306,7 +306,7 @@
               disabled
             />
             <BInputGroupAppend>
-              <BButton @click="copyTextOrder" variant="outline-dark"
+              <BButton @click="copyText(infoOrder.content.adress)" variant="outline-dark"
                 >Copy</BButton
               >
             </BInputGroupAppend>
@@ -328,7 +328,7 @@
               disabled
             />
             <BInputGroupAppend>
-              <BButton @click="copyTextOrder" variant="outline-dark"
+              <BButton @click="copyText(infoOrder.content.deliveryInfo)" variant="outline-dark"
                 >Copy</BButton
               >
             </BInputGroupAppend>
@@ -350,7 +350,7 @@
               disabled
             />
             <BInputGroupAppend>
-              <BButton @click="copyTextOrder" variant="outline-dark"
+              <BButton @click="copyText(infoOrder.content.additional)" variant="outline-dark"
                 >Copy</BButton
               >
             </BInputGroupAppend>
@@ -381,6 +381,7 @@
               id="edit-input-1"
               v-model="editOrder.content.companyName"
               type="text"
+              required
             />
           </BInputGroup>
         </BFormGroup>
@@ -397,6 +398,7 @@
               id="edit-input-2"
               v-model.lazy="editOrder.content.createdAt"
               type="datetime-local"
+              required
             />
           </BInputGroup>
         </BFormGroup>
@@ -409,21 +411,26 @@
           :items="editOrder.content.items"
           :fields="itemsFields"
         >
-          <template #cell(name)>
+
+        <template #cell(name)>
             <div v-for="item in editOrder.content.items" :key="item.id">
               <BFormSelect
                 class="m-1 ms-0"
                 :options="products"
                 v-model="item.name"
               />
+              
             </div>
           </template>
 
           <template #cell(quantity)>
             <div v-for="item in editOrder.content.items" :key="item.id">
-              <BFormInput class="m-1 ms-0" v-model="item.quantity" />
+              <BFormInput class="m-1 ms-0" v-model="item.quantity" 
+              required
+              />
             </div>
           </template>
+          
           <template #cell(actions)="row">
             <BButton
               variant="outline-dark text-danger"
@@ -480,6 +487,7 @@
               id="edit-input-4"
               v-model="editOrder.content.status"
               :options="statuses"
+              required
             />
           </BInputGroup>
         </BFormGroup>
@@ -496,6 +504,7 @@
               id="edit-input-5"
               v-model="editOrder.content.price"
               type="text"
+              required
             />
           </BInputGroup>
         </BFormGroup>
@@ -508,10 +517,10 @@
           class="my-1"
         >
           <BInputGroup>
-            <BFormInput
-              id="edit-input-6"
+            <BFormSelect
+              id="edit-input-5"
               v-model="editOrder.content.employee"
-              type="text"
+              :options="employees"
             />
           </BInputGroup>
         </BFormGroup>
@@ -528,6 +537,7 @@
               id="edit-input-7"
               v-model="editOrder.content.deadline"
               type="datetime-local"
+              required
             />
           </BInputGroup>
         </BFormGroup>
@@ -544,6 +554,7 @@
               id="edit-input-8"
               v-model="editOrder.content.paymentType"
               :options="paymentTypes"
+              required
             />
           </BInputGroup>
         </BFormGroup>
@@ -560,6 +571,7 @@
               id="edit-input-9"
               v-model="editOrder.content.addr"
               type="text"
+              required
             />
           </BInputGroup>
         </BFormGroup>
@@ -576,6 +588,7 @@
               id="edit-input-9"
               v-model="editOrder.content.deliveryInfo"
               type="text"
+              required
             />
           </BInputGroup>
         </BFormGroup>
@@ -760,10 +773,10 @@
           class="my-1"
         >
           <BInputGroup>
-            <BFormInput
-              id="add-input-6"
-              v-model="addOrder.content.employee"
-              type="text"
+            <BFormSelect
+              id="edit-input-5"
+              v-model="infoOrder.content.employee"
+              :options="employees"
             />
           </BInputGroup>
         </BFormGroup>
@@ -893,14 +906,14 @@ interface Order {
   status: string;
   price: number;
   addr: string;
-  employee: number;
+  employee: string;
   deadline: string; // ISO 8601 date string for TIMESTAMPTZ
   paymentType: string;
   deliveryInfo: Record<string, any>; // JSONB field
   additional: string;
   items: item[];
 }
-const employees = [];
+const employees = ["Елена Древинг", "Алексей Иванов"];
 
 const statuses = [
   "В процессе",
@@ -1065,7 +1078,7 @@ function add(status) {
   addOrder.content = {
     id: "",
     companyName: "",
-    createdAt: convertToIsoWithoutTimezone(Date.now() / 1000),
+    createdAt: convertToIsoWithoutTimezone(Date.now()),
     design: "",
     status: status,
     price: "",
@@ -1116,23 +1129,31 @@ const onSubmitAdd = (obj) => {
 };
 
 const convertToIsoWithoutTimezone = (timestamp: number): string => {
-  const date = new Date(timestamp * 1000); // Convert Unix timestamp to milliseconds
-  date.setHours(date.getHours() + 3); // Add 3 hours to the date
-  return date.toISOString().split(".")[0]; // Remove the milliseconds and timezone
-};
+    const date = new Date(timestamp);
+
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+
+    const formattedDateTime = `${year}-${month}-${day}T${hours}:${minutes}`;
+
+    return formattedDateTime;
+}
 
 
 const itemsTyped: Order[] = reactive([
   {
     id: 1,
     companyName: "Black Co",
-    createdAt: convertToIsoWithoutTimezone(Date.now() / 1000),
+    createdAt: convertToIsoWithoutTimezone(Date.now()),
     design: "Design A",
     status: statuses[0], // inProcess
     price: 1000,
     addr: "123 Main St",
-    employee: 101,
-    deadline: convertToIsoWithoutTimezone(Date.now() / 1000 + 7 * 24 * 60 * 60), // 1 week from now
+    employee: "Елена Древинг",
+    deadline: convertToIsoWithoutTimezone(Date.now() + 7 * 24 * 60 * 60), // 1 week from now
     paymentType: paymentTypes[0], // рассчетный счет компании
     deliveryInfo: { courier: "DHL", trackingNumber: "123456789" },
     additional: "Handle with care",
@@ -1149,15 +1170,15 @@ const itemsTyped: Order[] = reactive([
   {
     id: 2,
     companyName: "White Co",
-    createdAt: convertToIsoWithoutTimezone(Date.now() / 1000),
+    createdAt: convertToIsoWithoutTimezone(Date.now()),
     design: "Design B",
 
     status: statuses[1], // paymentPending
     price: 500,
     addr: "456 Elm St",
-    employee: 102,
+    employee: "Елена Древинг",
     deadline: convertToIsoWithoutTimezone(
-      Date.now() / 1000 + 14 * 24 * 60 * 60
+      Date.now() + 14 * 24 * 60 * 60
     ), // 2 weeks from now
     paymentType: paymentTypes[1], // наличные
     deliveryInfo: { courier: "UPS", trackingNumber: "987654321" },
@@ -1174,13 +1195,14 @@ const itemsTyped: Order[] = reactive([
   {
     id: 3,
     companyName: "Green Co",
-    createdAt: convertToIsoWithoutTimezone(1717425145),
+    createdAt: convertToIsoWithoutTimezone(Date.now()),
     design: "Design C",
     status: statuses[2], // inProduction
     price: 2000,
     addr: "789 Oak St",
-    employee: 103,
-    deadline: convertToIsoWithoutTimezone(1717435945), // 3 days from now
+    employee: "Елена Древинг",
+    deadline: convertToIsoWithoutTimezone(      Date.now() + 14 * 24 * 60 * 60
+    ), // 3 days from now
     paymentType: paymentTypes[2], // сбп
     deliveryInfo: { courier: "FedEx", trackingNumber: "1122334455" },
     additional: "Urgent delivery",
@@ -1196,14 +1218,14 @@ const itemsTyped: Order[] = reactive([
   {
     id: 4,
     companyName: "Yellow Co",
-    createdAt: convertToIsoWithoutTimezone(Date.now() / 1000),
+    createdAt: convertToIsoWithoutTimezone(Date.now()),
     design: "Design D",
     status: statuses[3], // qualityControl
     price: 1500,
     addr: "101 Maple St",
-    employee: 104,
+    employee: "Алексей Иванов",
     deadline: convertToIsoWithoutTimezone(
-      Date.now() / 1000 + 10 * 24 * 60 * 60
+      Date.now() + 10 * 24 * 60 * 60
     ), // 10 days from now
     paymentType: paymentTypes[0], // рассчетный счет компании
     deliveryInfo: { courier: "DHL", trackingNumber: "2233445566" },
@@ -1221,13 +1243,13 @@ const itemsTyped: Order[] = reactive([
   {
     id: 5,
     companyName: "Brown Co",
-    createdAt: convertToIsoWithoutTimezone(Date.now() / 1000),
+    createdAt: convertToIsoWithoutTimezone(Date.now()),
     design: "Design E",
     status: statuses[4], // packaging
     price: 2500,
     addr: "202 Birch St",
-    employee: 105,
-    deadline: convertToIsoWithoutTimezone(Date.now() / 1000 + 5 * 24 * 60 * 60), // 5 days from now
+    employee: "Алексей Иванов",
+    deadline: convertToIsoWithoutTimezone(Date.now() + 5 * 24 * 60 * 60), // 5 days from now
     paymentType: paymentTypes[1], // наличные
     deliveryInfo: { courier: "UPS", trackingNumber: "5566778899" },
     additional: "Package securely",
@@ -1252,6 +1274,10 @@ function onFiltered(filteredItems: TableItem<Order>[]) {
   // Trigger pagination to update the number of buttons/pages due to filtering
   totalRows.value = filteredItems.length;
   currentPage.value = 1;
+}
+
+function copyText(input) {
+  navigator.clipboard.writeText(input)
 }
 </script>
 <style>

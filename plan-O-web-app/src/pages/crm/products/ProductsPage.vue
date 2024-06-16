@@ -22,17 +22,15 @@
       class="Product-table mt-1 rounded-3"
       style="max-height: calc(100vh - 13em); max-width: 100%"
       model="sortBy"
-      :sort-internal="true"
-      :items="itemsTyped"
-      :fields="fieldsTyped"
-      :current-page="currentPage"
-      :per-page="perPage"
-      :filter="filter"
-      :responsive="False"
-      :filterable="filterOn"
-      :multisort="true"
-      :stickyHeader="true"
-      @filtered="onFiltered"
+        :sort-internal="true"
+        :items="itemsTyped"
+        :fields="fieldsTyped"
+        :filter="filter"
+        :responsive="false"
+        :filterable="filterOn"
+        :multisort="true"
+        :stickyHeader="true"
+        @filtered="onFiltered"
     >
       <template #cell(actions)="row">
         <BButton
@@ -105,7 +103,7 @@
               disabled
             />
             <BInputGroupAppend>
-              <BButton @click="copyTextProduct" variant="outline-dark"
+              <BButton @click="copyText(infoProduct.content.productName)" variant="outline-dark"
                 >Copy</BButton
               >
             </BInputGroupAppend>
@@ -125,7 +123,7 @@
               disabled
             />
             <BInputGroupAppend>
-              <BButton @click="copyTextProduct" variant="outline-dark"
+              <BButton @click="copyText(infoProduct.content.productPrice)" variant="outline-dark"
                 >Copy</BButton
               >
             </BInputGroupAppend>
@@ -145,7 +143,7 @@
               disabled
             />
             <BInputGroupAppend>
-              <BButton @click="copyTextProduct" variant="outline-dark"
+              <BButton @click="copyText(infoProduct.content.productPrice)" variant="outline-dark"
                 >Copy</BButton
               >
             </BInputGroupAppend>
@@ -165,7 +163,7 @@
               disabled
             />
             <BInputGroupAppend>
-              <BButton @click="copyTextProduct" variant="outline-dark"
+              <BButton @click="copyText(infoProduct.content.productPrice)" variant="outline-dark"
                 >Copy</BButton
               >
             </BInputGroupAppend>
@@ -259,7 +257,7 @@
       hideFooter="true"
       @hide="resetAddProduct"
     >
-      <BForm @submit="onSubmitAdd(addClient.content)" v-if="show">
+      <BForm @submit="onSubmitAdd(addProduct.content)" v-if="show">
         <BFormGroup
           id="add-input-group-1"
           label="Название товара"
@@ -315,7 +313,6 @@
           >Сохранить</BButton
         >
         <BButton
-          type="submit"
           variant="outline-danger"
           class="mt-3"
           @click="resetAddClient"
@@ -366,7 +363,7 @@ const productTypes = [
 
 const productUnits = [{ text: "Выберите..", value: null }, "Кг", "Л", "Шт"];
 
-const itemsTyped: TableItem<Product>[] = [
+const itemsTyped: TableItem<Product>[] = reactive([
   {
     productName: "Цветные наклейки",
     productPrice: "10.99",
@@ -427,7 +424,7 @@ const itemsTyped: TableItem<Product>[] = [
     productType: "Металлизированные изделия",
     productUnit: "Шт",
   },
-];
+]);
 
 const show = ref(true);
 
@@ -555,16 +552,24 @@ const addProduct = reactive({
 
 
 function resetAddProduct() {
-  infoProduct.title = "";
-  infoProduct.content = "";
+  addProduct.title = "";
+  addProduct.content = {
+    productName: "",
+    productPrice: "",
+    productType: "",
+    productUnit: "",
+  },
+  addProduct.open = false;
+  
 }
 
 const onSubmitAdd = (item) => {
   itemsTyped.push(item);
   resetAddProduct();
 };
-function copyTextProduct() {}
-
+function copyText(input) {
+  navigator.clipboard.writeText(input)
+}
 function onFiltered(filteredItems: TableItem<Product>[]) {
   // Trigger pagination to update the number of buttons/pages due to filtering
   totalRows.value = filteredItems.length;

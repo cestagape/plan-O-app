@@ -1,12 +1,8 @@
 <template>
   <div class="container-fluid">
-    <div class="row flex-nowrap">
-      <Sidebar
-        class="col-auto col-xxl-2 col-xl-2 col-md-3 col-sm-3 shadow-lg"
-      />
-      <div
-        class="content col-auto col-xxl-10 col-xl-10 col-md-9 col-sm-9 align-items-start mx-0 px-0 mh-100"
-      >
+    <div v-if="!hideSidebarAndNavbar" class="row flex-nowrap">
+      <Sidebar class="col-auto col-xxl-2 col-xl-2 col-md-3 col-sm-3 shadow-lg" />
+      <div class="content col-auto col-xxl-10 col-xl-10 col-md-9 col-sm-9 align-items-start mx-0 px-0 mh-100">
         <BNavbar
           toggleable="expand-lg"
           variant="dark bg-opacity-75"
@@ -14,9 +10,7 @@
           class="align-self-start align-items-center shadow-lg"
         >
           <BNavbarNav>
-            <BBreadcrumb
-              class="text-decoration-none"
-            />
+            <BBreadcrumb class="text-decoration-none" />
           </BNavbarNav>
           <BNavbarNav class="w-50">
             <BNavForm class="d-flex w-100">
@@ -28,22 +22,27 @@
         <router-view></router-view>
       </div>
     </div>
+    <div v-else>
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 
 <script>
 import Sidebar from "./modules/Sidebar.vue";
 
-
 export default {
   components: {
     Sidebar,
   },
-  data() {
-    return {};
-  },
+  computed: {
+    hideSidebarAndNavbar() {
+      return this.$route.meta.hideSidebarAndNavbar;
+    }
+  }
 };
 </script>
+
 <style>
 body {
   background: radial-gradient(

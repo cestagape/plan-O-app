@@ -9,7 +9,7 @@
         header-bg-variant="dark text-center"
         bg-variant="light bg-opacity-50"
         class="px-0 m-0 border-0 shadow-lg cardin"
-        bodyClass="p-2 text-center"
+        bodyClass="p-2 cardin text-center max-vh-75"
       >
         <BButton pill variant="outline-dark" class="mb-3" @click="add(column)">
           Добавить
@@ -151,40 +151,41 @@
   </script>
   
   <style>
-  html,
-  body,
-  #app {
-    height: 100%;
-    margin: 0;
-  }
-  
-  .BCardGroup {
-    height: 100%;
-  }
-  
-  
-  .cardin {
-    overflow-y: auto;
-    overflow-x: hidden;
-    scrollbar-width: thin;
-    scrollbar-color: rgba(107, 113, 118, 1) rgba(255, 255, 255, 0);
-    scroll-margin: 0;
-    scroll-padding: 0;
-    scrollbar-gutter: 0;
-    max-height: calc(100vh - 13em);
-    min-height: calc(100vh - 13em);
+html,
+body,
+#app {
+  height: 100%;
+  margin: 0;
+}
 
-  }
-  
-  .card-body {
-    padding: 0;
-  }
-  
-  .card-deck {
-    gap: 0.5em;
-  }
-  .list-group {
-    height: 100%;
-  }
-  </style>
-  
+.BCardGroup {
+  height: 100%;
+}
+
+.BCard {
+  max-height: 100vh;
+  overflow-y: auto;
+}
+
+.cardin {
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(107, 113, 118, 1) rgba(255, 255, 255, 0);
+  scroll-margin: 0;
+  scroll-padding: 0;
+  scrollbar-gutter: 0;
+  max-height: calc(100vh - 13em);
+}
+
+.card-body {
+  padding: 0;
+}
+
+.card-deck {
+  gap: 0.5em;
+}
+.list-group {
+  height: 100%;
+}
+</style>

@@ -15,11 +15,10 @@ CREATE TABLE items (
     id SERIAL PRIMARY KEY,
     name TEXT NOT NULL DEFAULT '',
     price INTEGER NOT NULL DEFAULT 0,
-    unit_id INTEGER NOT NULL REFERENCES units(id),
-    product_type_id INTEGER NOT NULL REFERENCES product_types(id)
+    unit_id INTEGER NOT NULL REFERENCES units(id)
 );
 
--- Статусы закаа.
+-- Статусы заказа.
 CREATE TABLE order_statuses (
     id SERIAL PRIMARY KEY,
     name TEXT NOT NULL DEFAULT ''
@@ -49,30 +48,31 @@ CREATE TABLE payment_types (
 -- Заказы.
 CREATE TABLE orders (
     id SERIAL PRIMARY KEY,
-    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    created_at INTEGER NOT NULL DEFAULT 0,
     design TEXT NOT NULL DEFAULT '',
-    quantity INTEGER NOT NULL DEFAULT 0,
+    items JSONB NOT NULL DEFAULT '{}'::JSONB
     status_id INTEGER NOT NULL REFERENCES order_statuses(id),
     price INTEGER NOT NULL DEFAULT 0,
     addr TEXT NOT NULL DEFAULT '',
-    employee_id INTEGER NOT NULL REFERENCES useitems’rs(id),
-    deadline TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    employee_id INTEGER NOT NULL REFERENCES users(id),
+    deadline INTEGER NOT NULL DEFAULT 0,
     payment_type_id INTEGER NOT NULL REFERENCES payment_types(id),
     delivery_info JSONB NOT NULL DEFAULT '{}'::JSONB,
-    additional JSONB NOT NULL DEFAULT '{}'::JSONB,
+    additional JSONB NOT NULL DEFAULT '{}'::JSONB
 );
 
 -- Переходы между состояниями заказа.
 CREATE TABLE order_transitions (
     id SERIAL PRIMARY KEY,
+    task_id INTEGER NOT NULL REFERENCES orders(id), -- Заказ.
     prev_state_id INTEGER NOT NULL REFERENCES order_statuses(id),
     curr_state_id INTEGER NOT NULL REFERENCES order_statuses(id),
-    transition_time TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    transition_time INTEGER NOT NULL DEFAULT 0
 );
 
 -- Заказы-товары.
 CREATE TABLE orders_items (
-    order_id INTEGER NOT NULL REFERENCES orders(id), 
+    order_id INTEGER NOT NULL REFERENCES orders(id),
     item_id INTEGER NOT NULL REFERENCES items(id)
 );
 
@@ -91,7 +91,7 @@ CREATE TABLE customers (
     email TEXT NOT NULL DEFAULT '',
     phone TEXT NOT NULL DEFAULT '',
     manager_name TEXT NOT NULL DEFAULT '',
-    notes JSONB NOT NULL DEFAULT '{}'::JSONB
+    notes TEXT NOT NULL DEFAULT ''
 );
 
 -- Промежуточная таблица заказчики - заказы.
@@ -110,19 +110,32 @@ CREATE TABLE task_states (
 CREATE TABLE tasks (
     id SERIAL PRIMARY KEY,
     name TEXT NOT NULL DEFAULT '',
-    deadline TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    deadline INTEGER NOT NULL DEFAULT 0,
     description TEXT NOT NULL DEFAULT '',
     employee_id INTEGER NOT NULL REFERENCES users(id),
-    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    created_at INTEGER NOT NULL DEFAULT 0,
+    state_id INTEGER NOT NULL REFERENCES task_states(id)
+);
+
+-- Задачи.
+CREATE TABLE leads (
+    id SERIAL PRIMARY KEY,
+    name TEXT NOT NULL DEFAULT '',
+    company_name_id TEXT NULL REFERENCES customers(id),
+    deadline INTEGER NOT NULL DEFAULT 0,
+    description TEXT NOT NULL DEFAULT '',
+    employee_id INTEGER NOT NULL REFERENCES users(id),
+    created_at INTEGER NOT NULL DEFAULT 0,
     state_id INTEGER NOT NULL REFERENCES task_states(id)
 );
 
 -- Переходы между состояниями задачи.
 CREATE TABLE task_transitions (
-    id SERIAL PRIMARY KEY,
+    id SERIAL PRIMARY KEY, 
+    task_id INTEGER NOT NULL REFERENCES tasks(id), -- Задача.
     prev_state_id INTEGER NOT NULL REFERENCES task_states(id),
     curr_state_id INTEGER NOT NULL REFERENCES task_states(id),
-    transition_time TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    transition_time INTEGER NOT NULL DEFAULT 0
 );
 
 -- Поставщики.
@@ -136,13 +149,4 @@ CREATE TABLE suppliers (
     payment_type INTEGER NOT NULL REFERENCES payment_types(id),
     website_link TEXT NOT NULL DEFAULT '',
     comments TEXT NOT NULL DEFAULT ''
-);
-
--- Поставки.
-CREATE TABLE supplies (
-    id SERIAL PRIMARY KEY,
-    supplier_id INTEGER NOT NULL REFERENCES suppliers(id),
-    supply_date TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    sum INTEGER NOT NULL DEFAULT 0,
-    info JSONB NOT NULL DEFAULT '{}'::JSONB
 );

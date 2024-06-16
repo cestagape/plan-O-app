@@ -22,17 +22,15 @@
       class="Supplier-table mt-1 rounded-3"
       style="max-height: calc(100vh - 13em); max-width: 100%"
       model="sortBy"
-      :sort-internal="true"
-      :items="itemsTyped"
-      :fields="fieldsTyped"
-      :current-page="currentPage"
-      :per-page="perPage"
-      :filter="filter"
-      :responsive="False"
-      :filterable="filterOn"
-      :multisort="true"
-      :stickyHeader="true"
-      @filtered="onFiltered"
+        :sort-internal="true"
+        :items="itemsTyped"
+        :fields="fieldsTyped"
+        :filter="filter"
+        :responsive="false"
+        :filterable="filterOn"
+        :multisort="true"
+        :stickyHeader="true"
+        @filtered="onFiltered"
     >
       <template #cell(actions)="row">
         <BButton
@@ -105,7 +103,7 @@
               disabled
             />
             <BInputGroupAppend>
-              <BButton @click="copyTextSupplier" variant="outline-dark"
+              <BButton @click="copyText(infoSupplier.content.companyName)" variant="outline-dark"
                 >Copy</BButton
               >
             </BInputGroupAppend>
@@ -125,7 +123,7 @@
               disabled
             />
             <BInputGroupAppend>
-              <BButton @click="copyTextSupplier" variant="outline-dark"
+              <BButton @click="copyText(infoSupplier.content.suppliableProductType)" variant="outline-dark"
                 >Copy</BButton
               >
             </BInputGroupAppend>
@@ -145,7 +143,7 @@
               disabled
             />
             <BInputGroupAppend>
-              <BButton @click="copyTextSupplier" variant="outline-dark"
+              <BButton @click="copyText(infoSupplier.content.managerName)" variant="outline-dark"
                 >Copy</BButton
               >
             </BInputGroupAppend>
@@ -165,7 +163,7 @@
               disabled
             />
             <BInputGroupAppend>
-              <BButton @click="copyTextSupplier" variant="outline-dark"
+              <BButton @click="copyText(infoSupplier.content.email)" variant="outline-dark"
                 >Copy</BButton
               >
             </BInputGroupAppend>
@@ -185,7 +183,7 @@
               disabled
             />
             <BInputGroupAppend>
-              <BButton @click="copyTextSupplier" variant="outline-dark"
+              <BButton @click="copyText(infoSupplier.content.phone)" variant="outline-dark"
                 >Copy</BButton
               >
             </BInputGroupAppend>
@@ -205,7 +203,7 @@
               disabled
             />
             <BInputGroupAppend>
-              <BButton @click="copyTextSupplier" variant="outline-dark"
+              <BButton @click="copyText(infoSupplier.content.websiteLink)" variant="outline-dark"
                 >Copy</BButton
               >
             </BInputGroupAppend>
@@ -225,7 +223,7 @@
               disabled
             />
             <BInputGroupAppend>
-              <BButton @click="copyTextSupplier" variant="outline-dark"
+              <BButton @click="copyText(infoSupplier.content.paymentType)" variant="outline-dark"
                 >Copy</BButton
               >
             </BInputGroupAppend>
@@ -245,7 +243,7 @@
               disabled
             />
             <BInputGroupAppend>
-              <BButton @click="copyTextSupplier" variant="outline-dark"
+              <BButton @click="copyText(infoSupplier.content.comments)" variant="outline-dark"
                 >Copy</BButton
               >
             </BInputGroupAppend>
@@ -583,7 +581,7 @@ const suppliableSupplierTypes = [
 ];
 const paymentTypes = ["Предоплата", "50/50", "Постоплата"];
 
-const itemsTyped: TableItem<Supplier>[] = [
+const itemsTyped: TableItem<Supplier>[] = reactive([
   {
     companyName: "Resin Solutions",
     managerName: "Ivan Ivanov",
@@ -704,7 +702,7 @@ const itemsTyped: TableItem<Supplier>[] = [
     websiteLink: "http://chempro.com",
     comments: "Chemical Suppliers for industries.",
   },
-];
+]);
 
 const show = ref(true);
 
@@ -858,7 +856,9 @@ const onSubmitAdd = (item) => {
   itemsTyped.push(item);
   resetAddSupplier();
 };
-function copyTextSupplier() {}
+function copyText(input) {
+  navigator.clipboard.writeText(input)
+}
 
 function onFiltered(filteredItems: TableItem<Supplier>[]) {
   // Trigger pagination to update the number of buttons/pages due to filtering

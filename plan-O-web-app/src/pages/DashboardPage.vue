@@ -157,7 +157,7 @@
     </BCardGroup>
   </BContainer>
 </template>
-
+ 
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import Chart from "chart.js/auto";
